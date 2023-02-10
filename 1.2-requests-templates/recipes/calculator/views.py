@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.urls import reverse
+
 
 DATA = {
     'omlet': {
@@ -18,6 +21,25 @@ DATA = {
     },
     # можете добавить свои рецепты ;)
 }
+
+recipes = {
+    'recipes' : [x for x in DATA.keys()]
+}
+
+def recipes_list_view(request):
+    context = recipes
+    return render(request, 'calculator/recipes.html', context)
+
+
+def recipe_view(request, servings=0):
+    recipe_name:str = request.path.replace('/','')
+    for recipe, ing in DATA.items():
+        if recipe == recipe_name:
+            if servings :
+                for i in ing.values():
+                    i = i * servings 
+                    context = {'recipe': ing, 'title': recipe_name}
+                    return render(request, 'calculator/index.html', context) 
 
 # Напишите ваш обработчик. Используйте DATA как источник данных
 # Результат - render(request, 'calculator/index.html', context)
