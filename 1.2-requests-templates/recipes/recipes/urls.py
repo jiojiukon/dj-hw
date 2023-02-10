@@ -22,3 +22,4 @@ urlpatterns = [
     re_path(r'(\w+)/', recipe_view, name='recipe'),
     # здесь зарегистрируйте вашу view-функцию
 ]
+
