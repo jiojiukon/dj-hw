@@ -32,15 +32,14 @@ def recipes_list_view(request):
     return render(request, 'calculator/recipes.html', context)
 
 
-def recipe_view(request, s):
+def recipe_view(request):
     recipe_name: str = request.path.replace('/','')
     servings = int(request.GET.get('servings',1))
-    data = DATA
-    for recipe, ing in data.items():
+    for recipe, ing in DATA.items():
         if recipe == recipe_name:
             if servings:
                 for ing_name, ing_sum in ing.items():
-                    ing[ing_name] = ing_sum * servings
+                        ing[ing_name] = ing_sum * servings
                 context = {'recipe': ing, 'title': recipe_name}
                 return render(request, 'calculator/index.html', context) 
 
